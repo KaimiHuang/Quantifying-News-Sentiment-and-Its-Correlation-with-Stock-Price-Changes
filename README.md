@@ -7,7 +7,7 @@
 *Quantifying News Sentiment and Its Correlation with Stock Prices through Sentiment Analysis*
 
 ## Project Description
-*This project aims to answer the question, "Are news sentiment and stock prices correlated?" by developing a program to 1) analyze sentiment about a stock in news, and 2) determine whether there is a correlation between sentiment and stock price. The motivation for the project is to utilize computational power and machine learning algorithms to answer the research question. The question is important as it is widely believed that market sentiment is one of the main factors that drive price. Due to the limitation of lack of market sentiment data, I am assuming that market sentiment can be extracted from financial news. Therefore, being able to answer this question analytically may provide insight to stock price fluctuations.
+This project aims to answer the question, "Are news sentiment and stock prices correlated?" by developing a program to 1) analyze sentiment about a stock in news, and 2) determine whether there is a correlation between sentiment and stock price. The motivation for the project is to utilize computational power and machine learning algorithms to answer the research question. The question is important as it is widely believed that market sentiment is one of the main factors that drive price. Due to the limitation of lack of market sentiment data, I am assuming that market sentiment can be extracted from financial news. Therefore, being able to answer this question analytically may provide insight to stock price fluctuations.
 
 The analytical procedure is broken down into 3 parts: 1) train a model to quantify sentiment in news, 2) use the model to predict sentiment in historical news articles, and 3) calculate and visualize the correlation between sentiment and stock prices.
 
@@ -40,7 +40,7 @@ The main.ipynb file contains functions and classes designed to analyze any major
 *Also list any required hardware, software, on online services you will need. In specific cases, we might be able to lend you hardware or obtain online services. Please email the instructor for more details.*
 
 ## Technical Specification
-Libraries: pandas, numpy, sklearn, seaborn, matplotlib, re, requests, json. 
+*Libraries: pandas, numpy, sklearn, seaborn, matplotlib, re, requests, json*
 
 ## System or Software Architecture Diagram
 *Include a block-based diagram illustrating the architecture of your software or system. This should include major components, such as user interface elements, back-end services, and data storage, and show how they interact. Tools like Lucidchart, Draw.io, or even hand-drawn diagrams photographed and uploaded are acceptable. The purpose of the diagram is to help us understand the architecture of your solution. Diagram asthetics do not matter and will not be graded.*
@@ -48,12 +48,10 @@ Libraries: pandas, numpy, sklearn, seaborn, matplotlib, re, requests, json.
 ## Development Methodology
 *Describe the methodology you'll use to organize and progress your work.*
 
-I will use GitHub projects board to track progress on tasks and milestones and GitHub issues to keep track of issues or problems.
-
-I will test the program manually by sampling a well-known publicly traded company.
+I will use GitHub projects board to track progress on tasks and milestones and GitHub issues to keep track of issues or problems. I will test the program manually by sampling a well-known publicly traded company.
 
 ## Potential Challenges and Roadblocks
-- *Getting relevant data such as market sentiment data*
+*Getting relevant data such as market sentiment data*
 
 ## Additional Resources
 *Include any additional resources, tutorials, or documentation that will be helpful for this project.*
