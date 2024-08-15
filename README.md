@@ -7,9 +7,9 @@
 *Quantifying News Sentiment and Its Correlation with Stock Prices through Sentiment Analysis*
 
 ## Project Description
-*This project aims to answer the question, "Are news sentiment and stock prices correlated?" by developing a program to 1) analyze sentiment about a stock in news, and 2) determine whether there is a correlation between sentiment and stock price. The motivation for the project is to utilize computational power and machine learning algorithms to answer the research question. The question is important as it is widely believed that market sentiment is one of the main factors that drive price. Due to the limitation of lack of market sentiment data, I am assuming that market sentiment can be extracted from financial news. Therefore, being able to answer this question analytically using data may provide insight to stock price fluctuations.
+*This project aims to answer the question, "Are news sentiment and stock prices correlated?" by developing a program to 1) analyze sentiment about a stock in news, and 2) determine whether there is a correlation between sentiment and stock price. The motivation for the project is to utilize computational power and machine learning algorithms to answer the research question. The question is important as it is widely believed that market sentiment is one of the main factors that drive price. Due to the limitation of lack of market sentiment data, I am assuming that market sentiment can be extracted from financial news. Therefore, being able to answer this question analytically may provide insight to stock price fluctuations.
 
-The analytical procedure is broken down into 3 parts: 1) train a model to quantify sentiment in news, 2) predict sentiment in historical news articles using the model, and 3) calculate and visualize the correlation between sentiment and stock prices.
+The analytical procedure is broken down into 3 parts: 1) train a model to quantify sentiment in news, 2) use the model to predict sentiment in historical news articles, and 3) calculate and visualize the correlation between sentiment and stock prices.
 
 Model-training involves data wrangling, feature extraction, and model selection. Train and test data is from FinancialPhraseBank-v1.0 (https://huggingface.co/datasets/takala/financial_phrasebank). Feature extraction is done via TF-IDF (Term Frequency-Inverse Document Frequency), where a feature matrix is produced. Then, features will be fed to a Multinomial Logistic Regression classifier for training. The classifier is trained to classify a sentence to have positive sentiment (+1), neutral sentiment (0), or negative sentiment (-1). GridSearch is used to perform cross validation and select the best combination of parameters for the classifier. The best model is tested for accuracy using test data. This is a very basic model. If time permits, other models such as bert will also be considered.
 
@@ -18,7 +18,7 @@ Historical news sentiment prediction involves data wrangling and applying the se
 Step 3 uses the sentiment scores obtained from the step above and historical prices to calculate and visualize correlation. Stock prices can be obtained via API at https://www.alphavantage.co/query?. Requested data is downloaded in json file and then transformed to a data frame. Sentiment scores and stock price data are merged into one data frame. Prices for the dates when the news were published are joined, as well as prices two days prior to the publication, and prices three days prior. The rationale behind this algorithm is that the articles in the historical news data all come from sources such as wsj, reuters, where publication of information is delayed by 2 to 3 days, meaning journalists receive information from sources other than wsj and reuters on day 0 and then write an artile. By the time the publication is out in wsj, the information has already been available to the public for about 2 to 3 days. Such information should already be reflected in the stock price. Therefore, price change percentage is calculated by: (the price on the date of publication (sentiment date) - the price two or three days prior)/ the price two or three days prior * 100. Lastly, correlation between sentiment and stock prices is calculated using Python built-in function, and scatter plot and time series plot are produced as visual aids.
 
 The main.ipynb file contains functions and classes designed to analyze any major public companies. This is possible because the historical news dataset is diverse and stock prices of different symbols are available through API at https://www.alphavantage.co.
-*
+
 
 ## Timeline
 
@@ -40,7 +40,7 @@ The main.ipynb file contains functions and classes designed to analyze any major
 *Also list any required hardware, software, on online services you will need. In specific cases, we might be able to lend you hardware or obtain online services. Please email the instructor for more details.*
 
 ## Technical Specification
-*Libraries that will be used: pandas, numpy, sklearn, seaborn, matplotlib, re, requests, json. *
+Libraries: pandas, numpy, sklearn, seaborn, matplotlib, re, requests, json. 
 
 ## System or Software Architecture Diagram
 *Include a block-based diagram illustrating the architecture of your software or system. This should include major components, such as user interface elements, back-end services, and data storage, and show how they interact. Tools like Lucidchart, Draw.io, or even hand-drawn diagrams photographed and uploaded are acceptable. The purpose of the diagram is to help us understand the architecture of your solution. Diagram asthetics do not matter and will not be graded.*
@@ -48,23 +48,19 @@ The main.ipynb file contains functions and classes designed to analyze any major
 ## Development Methodology
 *Describe the methodology you'll use to organize and progress your work.*
 
-*First, describe your plan for developing your project. This might include how (or if) you plan to use*
-- *GitHub projects board to track progress on tasks and milestones*
-- *GitHub issues to keep track of issues or problems*
-- *Separate Git branches and/or GitHub pull requests for development*
-- *GitHub actions for automated testing or deployment pipelines*
-- *GitHub wiki for documentation and notes*
+I will use GitHub projects board to track progress on tasks and milestones and GitHub issues to keep track of issues or problems.
 
-*Please also describe how (if) you plan test and evaluate your project's functionality. Do you plan to test manually or automatically? Any specific testing frameworks or libraries you plan to use?*
+I will test the program manually by sampling a well-known publicly traded company.
 
 ## Potential Challenges and Roadblocks
-* - getting relevant data such as market sentiment data*
+- *Getting relevant data such as market sentiment data*
 
 ## Additional Resources
 *Include any additional resources, tutorials, or documentation that will be helpful for this project.*
 
-## Conclusion and Future Work (to be updated)
+## Conclusion and Future Work
 
-* Things that can be improved in this project: 
-- data: training data may not be the same data that the model is used to predict. This may make the predicted sentiment scores unreliable. 
-- quantifying sentiment: how to properly calculate the sentiment of a piece of newspaper article? The "weight" of sentiment of non-neutral sentences differ as they carry different kinds of information, e.g., two positive sentences both receive the score of 1 as the model assumes equal weights. However, sentence 1 may influence traders' decisions more than sentence 2. As the next step, will consider using a model that assigns continuous numerical values as scores. *
+Things that can be improved in this project: 
+- Data: training data may not be the same data that the model is used to predict. This might have led to unreliable prediction. A way to remediate would be using historical financial news that are as close to the training data as possible.
+- How to accurately calculate the sentiment of a newspaper article: The "weights" of sentiments in non-neutral sentences differ, as they contain different kinds of information. For example, sentence 1 might discuss progress in product development, while sentence 2 might mention the hiring of a new director. The former could have a greater impact on traders' decisions than the latter. However, the current model assumes equal weights, and assigning both a score of 1. As the next step, I plan to explore using a regression model that assigns continuous numerical values as scores, provided training data is available. 
+- Identifying relevant articles given a company name: the current method involves checking if the company name appears in the title of an article to determine if the content pertains to that company. However, this approach can be misleading, especially when an article discusses multiple public companies. In such cases, the sentiments expressed in the article may not be solely directed at one company. A more sophisticated approach would involve using Named Entity Recognition (NER) to extract the names of organizations or companies mentioned in the article titles. If more than one company name is identified, the article would be excluded, as it becomes challenging to ascertain which company the article primarily addresses.
