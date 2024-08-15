@@ -4,7 +4,7 @@
 *Kaimi Huang kh2908@cumc.columbia.edu*
 
 ## Project Title
-*Quantifying News Sentiment and Its Correlation with Stock Prices through Sentiment Analysis*
+*Quantifying News Sentiment and Its Correlation with Stock Prices*
 
 ## Project Description
 This project aims to answer the question, "Are news sentiment and stock prices correlated?" by developing a program to 1) analyze sentiment about a stock in news, and 2) determine whether there is a correlation between sentiment and stock price. The motivation for the project is to utilize computational power and machine learning algorithms to answer the research question. The question is important as it is widely believed that market sentiment is one of the main factors that drive price. Due to the limitation of lack of market sentiment data, I am assuming that market sentiment can be extracted from financial news. Therefore, being able to answer this question analytically may provide insight to stock price fluctuations.
