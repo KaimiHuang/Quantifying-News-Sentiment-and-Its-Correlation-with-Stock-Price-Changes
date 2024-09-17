@@ -8,7 +8,7 @@ This project aims to answer the question, "Are news sentiment and stock prices c
 
 The analytical procedure is broken down into 3 parts: 1) train a model to quantify sentiment in news, 2) use the model to predict sentiment in historical news articles, and 3) calculate and visualize the correlation between sentiment and stock price changes.
 
-Model-training involves data wrangling, feature extraction, and model selection. Train and test data is from FinancialPhraseBank-v1.0 (https://huggingface.co/datasets/takala/financial_phrasebank). Feature extraction is done via TF-IDF (Term Frequency-Inverse Document Frequency), where a feature matrix is produced. Then, features will be fed to a Multinomial Logistic Regression classifier for training. The classifier is trained to classify a sentence to have positive sentiment (+1), neutral sentiment (0), or negative sentiment (-1). GridSearch is used to perform cross validation and select the best combination of parameters for the classifier. The best model is tested for accuracy using test data. This is a very basic model. If time permits, other models such as bert will also be considered.
+Model-training involves data wrangling, feature extraction, and model selection. Train and test data is from FinancialPhraseBank-v1.0 (https://huggingface.co/datasets/takala/financial_phrasebank). Feature extraction is done via TF-IDF (Term Frequency-Inverse Document Frequency), where a feature matrix is produced. Then, features will be fed to a Multinomial Logistic Regression classifier for training. The classifier is trained to classify a sentence to have positive sentiment (+1), neutral sentiment (0), or negative sentiment (-1). GridSearch is used to perform cross validation and select the best combination of parameters for the classifier. The best model is tested for accuracy using test data. This is a very basic model. If time permits, other models such as FinBERT will also be considered.
 
 Historical news sentiment prediction involves data wrangling and applying the selected model from step 1 to processed text. Historical financial news articles are from https://huggingface.co/datasets/ashraq/financial-news-articles. Data cleaning utilizes regular expression functions to extract information such as date, newspaper, and public company name, from text such as url and article title. The cleaned data is stored in and returned as data frames. In terms of sentiment prediction, each article is broken into sentences, and each sentence is evaluated for sentiment (+1, 0, -1). Non-zero sentiments are summed and counted for each article. After that, data is aggregated by date and the mean sentiment is taken, so that the final data frame contains time-series sentiment scores. For visualization, line graph and a bar chart where blue bars represent positive sentiment and red bars represent negative sentiment can also be obtained.
 
@@ -28,11 +28,22 @@ I will use GitHub projects board to track progress on tasks and milestones and G
 - Missing stock prices: stocks are not traded during weekends. For weekend dates, I fill in the missing values with the open price of the following Monday.
 
 ## Conclusion and Future Work
-
 Conclusion: 
-To be updated
+There is low positive correlation between sentiment in financial news and stock price change. This claim is based on 8 observations (see table below). Note 1 public company, Illumina, out of the 9 total did not have a correlation becuase either one or both of its time-series variables were non-stationary.
 
-Things that can be improved in this project: 
+| company  | correlation|
+|----------|------------|
+|apple     | 0.22       |
+|tesla     | 0.16       |
+|amazon    | 0.24       |
+|illumina  | None       |
+|netflix   | 0.25       |
+|nvidia    | 0.43       |
+|microsoft | -0.02      |
+|google    | 0.05       |
+|facebook  | 0.26       |
+
+Lastly, there are things that can be improved in this project: 
 - Training data for model_1 and historical financial news may not be the same kind of data because they are from different sources. This might have led to unreliable prediction. A way to remediate would be to use news articles that are as close to the training data as possible. Or, to use model_2, FinBERT, which is trained on more diverse data - financial news and the FiQA dataset.
 - How to accurately calculate the sentiment of a newspaper article: The "weights" of sentiments in non-neutral sentences differ, as they contain different kinds of information. For example, sentence 1 might discuss progress in product development, while sentence 2 might mention the hiring of a new director. The former could have a greater impact on traders' decisions than the latter. However, the current model assumes equal weights, and assigning both a score of 1. As the next step, I plan to explore using a regression model that assigns continuous numerical values as scores, provided training data is available. 
 - Identifying relevant articles given a company name: the current method involves checking if the company name appears in the title of an article to determine if the content pertains to that company. However, this approach can be misleading, especially when an article discusses multiple public companies. In such cases, the sentiments expressed in the article may not be solely directed at one company. A more sophisticated approach would involve using Named Entity Recognition (NER) to extract the names of organizations or companies mentioned in the article titles. If more than one company name is identified, the article would be excluded, as it becomes challenging to ascertain which company the article primarily addresses.
